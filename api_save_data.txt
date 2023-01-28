@@ -1,0 +1,16 @@
+function doGet (request){
+ var ss = SpreadsheetApp.openByUrl("xxxxxxxxxxx");
+ var customer_id = request.parameter.customer_id
+ var customer_name = request.parameter.customer_name
+ var comment = request.parameter.comment
+ var sheet = ss.getActiveSheet();
+ var today = new Date();
+ var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+ var time = today.getHours() +":" + today.getMinutes()+":"+today.getSeconds();
+ var dateTime = date+' '+time;
+ sheet.appendRow([dateTime,customer_id,customer_name,comment]);
+ var result = {}
+ result.result = 'added'
+ var result = JSON.stringify(result);
+ return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+}
